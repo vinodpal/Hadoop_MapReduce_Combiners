@@ -1,0 +1,34 @@
+Any mapreduce program execution contains the so many mappers tasks and one or more reducer tasks.
+After execution of all mappers each and every mapper output will be forwarded to reducer task.
+Sometimes the mappers output will be very huge.
+To transfer the huge volume of data from mapper nodes to reducer node/reducer nodes high network bandwidth is required.
+Even though the high network bandwidth is available there may be a chance of loss of data in netwrok.
+If low network bandwidth is available then network traffic will be increased automatically performance of the application will be degraded.
+To avoid the above problems we use combiner
+combiner is a userdefined class which takes the mapper output as input and executes on the mapper node.
+The functionality of the combiner is "summarize the mappper output records with the same key and output of combiner will be sent over the network to actual reducer as input.
+
+->combiner we can also called as mini reducer or local reducer.
+Note: always combiners output records lessthan mappers output records
+
+steps to implements combiner
+----------------------------
+1.defining the combiner class 
+
+ combiner class must extends Reducer class and should override reduce method.
+
+  public class Mycombiner extends Reducer<Text,Intwritable,Text,IntWritable
+{
+public void reduce(Text key,Iterable<IntWritable> val,Context con)throws InterruptedException,IOException
+{
+---------------
+---------------
+----------------
+}
+}
+
+2.attach the combiner class to job
+
+job.setCombinerClass(Mycombiner.class);
+    
+note:sometimes reducer class we can also set as combiner class
